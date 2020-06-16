@@ -1,6 +1,6 @@
 import os
-
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 
 def create_app(test_config=None):
@@ -8,7 +8,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY=os.getenv('SECRET_KEY'),
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        DATABASE=os.path.join(app.instance_path, 'turtle.db'),
     )
 
     if test_config is None:
@@ -24,9 +24,12 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/')
-    def hello():
-        return 'This is the Flask App index page....'
+    # # a simple page that says hello
+    # @app.route('/')
+    # def hello():
+    #     return 'This is the Flask App index page....'
+
+    from . import db
+    db.init_app(app)
 
     return app
