@@ -1,6 +1,5 @@
 import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 
 
 def create_app(test_config=None):
@@ -24,7 +23,7 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # # a simple page that says hello
+    # a simple page that says hello
     # @app.route('/')
     # def hello():
     #     return 'This is the Flask App index page....'
