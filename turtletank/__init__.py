@@ -7,7 +7,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY=os.getenv('SECRET_KEY'),
-        DATABASE=os.path.join(app.instance_path, 'turtle.db'),
+        DATABASE=os.path.join(app.instance_path, 'turtletank-data.db'),
     )
 
     if test_config is None:
@@ -24,11 +24,14 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    # @app.route('/')
-    # def hello():
-    #     return 'This is the Flask App index page....'
+    @app.route('/')
+    def hello():
+        return 'This is the Flask App index page....'
 
     from . import db
     db.init_app(app)
+
+    from . import auth
+    app.register_blueprint(auth.bp)
 
     return app

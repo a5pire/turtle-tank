@@ -9,10 +9,11 @@ CREATE TABLE aquarist (
 
 CREATE TABLE tank (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
+  tank_owner INTEGER NOT NULL,
   name TEXT NOT NULL,
   length FLOAT NOT NULL,
   width FLOAT NOT NULL,
   depth FLOAT NOT NULL,
   volume FLOAT NOT NULL,
-  FOREIGN KEY (name) REFERENCES aquarist (id)
+  FOREIGN KEY (tank_owner) REFERENCES aquarist (id)
 );
