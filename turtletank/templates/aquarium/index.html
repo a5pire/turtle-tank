@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Tanks{% endblock %}</h1>
+  {% if g.user %}
+    <a class="action" href="{{ url_for('aquarium.create') }}">New</a>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% for tank in tanks %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>{{ tank['name'] }}</h1>
+          <div class="about">by {{ tank['username'] }}</div>
+        </div>
+        {% if g.user['id'] == tank['tank_owner'] %}
+          <a class="action" href="{{ url_for('aquarium.update', id=tank['id']) }}">Edit</a>
+        {% endif %}
+      </header>
+      <!-- <p class="body">{{ post['body'] }}</p> -->
+    </article>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
