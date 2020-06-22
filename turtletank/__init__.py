@@ -1,5 +1,8 @@
 import os
 from flask import Flask
+from . import db
+from . import auth
+from . import aquarium
 
 
 def create_app(test_config=None):
@@ -23,18 +26,10 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # a simple page that says hello
-    @app.route('/')
-    def hello():
-        return 'This is the Flask App index page....'
-
-    from . import db
     db.init_app(app)
 
-    from . import auth
     app.register_blueprint(auth.bp)
 
-    from . import aquarium
     app.register_blueprint(aquarium.bp)
     app.add_url_rule('/', endpoint='index')
 
