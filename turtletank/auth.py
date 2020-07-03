@@ -23,7 +23,7 @@ def register():
         elif db.execute(
             'SELECT id FROM aquarist WHERE username = ?', (username,)
         ).fetchone() is not None:
-            error = 'Aquarist {} is already registered.'.format(username)
+            error = f'Aquarist {username} is already registered.'
 
         if error is None:
             db.execute(
@@ -45,12 +45,13 @@ def login():
         password = request.form['password']
         db = get_db()
         error = None
+
         aquarist = db.execute(
             'SELECT * FROM aquarist WHERE username = ?', (username,)
         ).fetchone()
 
         if aquarist is None:
-            error = 'Incorrect username.'
+            error = 'Username is incorrect or doesnt exist.'
         elif not check_password_hash(aquarist['password'], password):
             error = 'Incorrect password.'
 
