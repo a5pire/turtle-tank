@@ -26,25 +26,26 @@ def index():
 def create():
     if request.method == 'POST':
         name = request.form['name']
-        length = request.form['length']
-        width = request.form['width']
-        depth = request.form['depth']
-        volume = round((length * width) * depth / 1000000, 2)
+        length = int(request.form['length'])
+        width = int(request.form['width'])
+        depth = int(request.form['depth'])
         error = None
 
-        if not name or length or width or depth or volume:
-            error = 'Please enter required fields.'
+        if not name or not length or not width or not depth:
+            error = 'Please enter all fields.'
 
-        if error:
-        # if error is not None:
+        if error is not None:
             flash(error)
         else:
+            volume = round((length * width) * depth / 1000000, 2)
+
             db = get_db()
             db.execute(
-                'INSERT INTO tank (name, length, width, depth, volume, tank_owner)'
+                'INSERT INTO tank (tank_owner, name, length, width, depth, volume)'
                 ' VALUES (?, ?, ?, ?, ?, ?)',
-                (name, g.user['id'])
-            )
+                (g.user['id'], name, length, width, depth, volume)
+                )
+
             db.commit()
             return redirect(url_for('aquarium.index'))
 
