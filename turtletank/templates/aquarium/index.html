@@ -14,7 +14,7 @@
         <header>
           <div>
             <h1>{{ tank['name'] }}</h1>
-            <div class="about">Volume {{ (tank['length'] * tank['width']) * tank['depth'] / 1000000 }}</div>
+            <div class="about">Volume: {{ (tank['length'] * tank['width']) * tank['depth'] / 1000000 }} litres</div>
           </div>
           <a class="action" href="{{ url_for('aquarium.update', id=tank['id']) }}">Edit</a>
         </header>
