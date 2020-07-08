@@ -26,9 +26,9 @@ def index():
 def create():
     if request.method == 'POST':
         name = request.form['name']
-        length = int(request.form['length'])
-        width = int(request.form['width'])
-        depth = int(request.form['depth'])
+        length = float(request.form['length'])
+        width = float(request.form['width'])
+        depth = float(request.form['depth'])
         error = None
 
         if not name or not length or not width or not depth:
@@ -52,6 +52,7 @@ def create():
     return render_template('aquarium/create.html')
 
 
+# retrieves a tank from the db
 def get_tank(id, check_aquarist=True):
     tank = get_db().execute(
         'SELECT t.id, name, length, width, depth, volume, tank_owner'
@@ -69,6 +70,7 @@ def get_tank(id, check_aquarist=True):
     return tank
 
 
+# update tank based on aquarist id
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
@@ -76,10 +78,9 @@ def update(id):
 
     if request.method == 'POST':
         name = request.form['name']
-        length = request.form['length']
-        width = request.form['width']
-        depth = request.form['depth']
-        volume = round((length * width) * depth / 1000000, 2)
+        length = float(request.form['length'])
+        width = float(request.form['width'])
+        depth = float(request.form['depth'])
         error = None
 
         if not name:
@@ -88,6 +89,7 @@ def update(id):
         if error is not None:
             flash(error)
         else:
+            volume = round((length * width) * depth / 1000000, 2)
             db = get_db()
             db.execute(
                 'UPDATE tank SET name = ?, length = ?, width = ?, depth = ?, volume = ?'
@@ -97,9 +99,10 @@ def update(id):
             db.commit()
             return redirect(url_for('aquarium.index'))
 
-    return render_template('aquarium/update.html', post=tank)
+    return render_template('aquarium/update.html', tank=tank)
 
 
+# delete tank based on aquarist id
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
