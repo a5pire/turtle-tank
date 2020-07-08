@@ -48,9 +48,10 @@ def create():
 
             db.commit()
             flash('New tank created!')
+
             return redirect(url_for('aquarium.index'))
 
-    return render_template('aquarium/create.html')
+    return render_template('aquarium/index.html')
 
 
 # retrieves a tank from the db
@@ -98,9 +99,11 @@ def update(id):
                 (name, length, width, depth, volume, id)
             )
             db.commit()
+            flash('Tank updated!')
+
             return redirect(url_for('aquarium.index'))
 
-    return render_template('aquarium/update.html', tank=tank)
+    return render_template('aquarium/index.html', tank=tank)
 
 
 # delete tank based on aquarist id
@@ -111,4 +114,6 @@ def delete(id):
     db = get_db()
     db.execute('DELETE FROM tank WHERE id = ?', (id,))
     db.commit()
+    flash('Tank deleted!')
+
     return redirect(url_for('aquarium.index'))
