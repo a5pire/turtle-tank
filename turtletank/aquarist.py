@@ -47,6 +47,7 @@ def create():
                 )
 
             db.commit()
+            flash('New tank created!')
             return redirect(url_for('aquarium.index'))
 
     return render_template('aquarium/create.html')
