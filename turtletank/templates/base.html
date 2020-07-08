@@ -1,14 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <title>{% block title %}{% endblock %} - Turtle Tank</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+<!-- Create Tank Modal -->
+<div class="modal fade" id="create-tank-modal" tabindex="-1" role="dialog" aria-labelledby="create-tank-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="create-tank-modal-label">Create Tank</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <div class="container">
+            <form method="post">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input name="name" class="form-control" id="name" value="{{ request.form['name'] }}" required>
+              </div>
+              <div class="form-group">
+                <label for="length">Length</label>
+                <input name="length" type="number" class="form-control" id="length" value="{{ request.form['length'] }}" required>
+              </div>
+              <div class="form-group">
+                <label for="width">Width</label>
+                <input name="width" type="number" class="form-control" id="width" value="{{ request.form['width'] }}" required>
+              </div>
+              <div class="form-group">
+                <label for="depth">Depth</label>
+                <input name="depth" type="number" class="form-control" id="depth" value="{{ request.form['depth'] }}" required>
+              </div>
+            </form>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save Tank</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Navbar header -->
 <div class="container">
   <h1>Turtle Tank</h1>
   <nav class="navbar navbar-light bg-light d-flex justify-content-end">
     {% if g.user %}
       <form>
-        <a type="button" class="btn btn-primary" href="{{ url_for('aquarium.create') }}">Create Tank</a>
+        <a type="button" class="btn btn-primary" href="" data-toggle="modal" data-target="#create-tank-modal">Create Tank</a>
         <a type="button" class="btn btn-primary" href="{{ url_for('auth.logout') }}">Log Out</a>
       </form>
     {% else %}
@@ -33,7 +74,8 @@
 </div>
 
 <!-- Scripts -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 
 </html>
