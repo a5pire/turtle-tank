@@ -1,26 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <title>{% block title %}{% endblock %} - Turtle Tank</title>
-<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-<nav>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<div class="container">
   <h1>Turtle Tank</h1>
-  <ul>
+  <nav class="navbar navbar-light bg-light d-flex justify-content-end">
     {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span>
-      <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+      <form>
+        <a type="button" class="btn btn-primary" href="{{ url_for('aquarium.create') }}">Create Tank</a>
+        <a type="button" class="btn btn-primary" href="{{ url_for('auth.logout') }}">Log Out</a>
+      </form>
     {% else %}
-      <li><a href="{{ url_for('auth.register') }}">Register</a>
-      <li><a href="{{ url_for('auth.login') }}">Log In</a>
+      <form>
+        <a type="button" class="btn btn-primary" href="{{ url_for('auth.register') }}">Register</a>
+        <a type="button" class="btn btn-primary" href="{{ url_for('auth.login') }}">Log In</a>
+      </form>
     {% endif %}
-  </ul>
-</nav>
-<section class="content">
-  <header>
-    {% block header %}{% endblock %}
-  </header>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block content %}{% endblock %}
-</section>
+  </nav>
+
+  <section>
+    <header>
+      {% block header %}{% endblock %}
+    </header>
+        {% for message in get_flashed_messages() %}
+      <div>
+        {{ message }}
+      </div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+  </section>
+</div>
+
+<!-- Scripts -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
 </html>
