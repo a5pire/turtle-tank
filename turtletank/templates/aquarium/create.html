@@ -1,19 +1,27 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}New Tank{% endblock %}</h1>
-{% endblock %}
+{% block title %}New Tank{% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="name">Name</label>
-    <input name="name" id="name" value="{{ request.form['name'] }}" required>
-    <label for="length">Length</label>
-    <input name="length" type="number" id="length" value="{{ request.form['length'] }}" required>
-    <label for="width">Width</label>
-    <input name="width" type="number" id="width" value="{{ request.form['width'] }}" required>
-    <label for="depth">Depth</label>
-    <input name="depth" type="number" id="depth" value="{{ request.form['depth'] }}" required>
-    <input type="submit" value="Save Tank">
-  </form>
+  <div class="container">
+    <form method="post">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input name="name" class="form-control" id="name" value="{{ request.form['name'] }}" required>
+      </div>
+      <div class="form-group">
+        <label for="length">Length</label>
+        <input name="length" type="number" class="form-control" id="length" value="{{ request.form['length'] }}" required>
+      </div>
+      <div class="form-group">
+        <label for="width">Width</label>
+        <input name="width" type="number" class="form-control" id="width" value="{{ request.form['width'] }}" required>
+      </div>
+      <div class="form-group">
+        <label for="depth">Depth</label>
+        <input name="depth" type="number" class="form-control" id="depth" value="{{ request.form['depth'] }}" required>
+      </div>
+        <button type="submit" class="btn btn-secondary">Save Tank</button>
+    </form>
+  </div>
 {% endblock %}
