@@ -31,7 +31,7 @@ def create():
         depth = float(request.form['depth'])
         error = None
 
-        if not name or not length or not width or not depth:
+        if not (name and length and width and depth):
             error = 'Please enter all fields.'
 
         if error is not None:
@@ -80,9 +80,6 @@ def update(id):
 
     if request.method == 'POST':
         name = request.form['name']
-        length = float(request.form['length'])
-        width = float(request.form['width'])
-        depth = float(request.form['depth'])
         error = None
 
         if not name:
@@ -91,6 +88,9 @@ def update(id):
         if error is not None:
             flash(error)
         else:
+            length = float(request.form['length'])
+            width = float(request.form['width'])
+            depth = float(request.form['depth'])
             volume = round((length * width) * depth / 1000000, 2)
             db = get_db()
             db.execute(
