@@ -1,8 +1,5 @@
-from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
-)
+from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 from werkzeug.exceptions import abort
-
 from turtletank.auth import login_required
 from turtletank.db import get_db
 
