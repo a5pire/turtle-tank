@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from . import db, auth, aquarist
+from . import db, auth, routes
 
 
 def create_app(test_config=None):
@@ -28,7 +28,7 @@ def create_app(test_config=None):
 
     app.register_blueprint(auth.bp)
 
-    app.register_blueprint(aquarist.bp)
+    app.register_blueprint(routes.bp)
     app.add_url_rule('/', endpoint='index')
 
     return app
