@@ -2,6 +2,7 @@ from flask import Blueprint, flash, g, redirect, render_template, request, url_f
 from werkzeug.exceptions import abort
 from turtletank.auth import login_required
 from turtletank.db import get_db
+from turtletank.calculations.volumetrics import Volumetrics
 
 bp = Blueprint('aquarium', __name__)
 
@@ -10,7 +11,7 @@ bp = Blueprint('aquarium', __name__)
 def index():
     db = get_db()
     tanks = db.execute(
-        'SELECT t.id, name, length, width, depth, tank_owner, username'
+        'SELECT t.id, name, length, width, depth, volume, tank_owner, username'
         ' FROM tank t JOIN aquarist a ON t.tank_owner = a.id'
         ' ORDER BY name DESC'
     ).fetchall()
@@ -26,6 +27,8 @@ def create():
         length = float(request.form['length'])
         width = float(request.form['width'])
         depth = float(request.form['depth'])
+        volume = Volumetrics.calculate_volume(length, width, depth)
+
         error = None
 
         if not (name and length and width and depth):
@@ -34,7 +37,6 @@ def create():
         if error is not None:
             flash(error)
         else:
-            volume = round((length * width) * depth / 1000000, 2)
 
             db = get_db()
             db.execute(
@@ -88,7 +90,8 @@ def update(id):
             length = float(request.form['length'])
             width = float(request.form['width'])
             depth = float(request.form['depth'])
-            volume = round((length * width) * depth / 1000000, 2)
+            volume = Volumetrics.calculate_volume(length, width, depth)
+
             db = get_db()
             db.execute(
                 'UPDATE tank SET name = ?, length = ?, width = ?, depth = ?, volume = ?'
